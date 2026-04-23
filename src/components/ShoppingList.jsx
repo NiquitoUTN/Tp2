@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ListItem from './ListItem';
 
 
+
 export function ShoppingList(props) {
   const startItems = [];
 
@@ -13,7 +14,7 @@ export function ShoppingList(props) {
     const formData = new FormData(e.target);
     var object = {};
     formData.forEach((value, key) => object[key] = value);
-    alert(`You purchased: ${JSON.stringify(object)}`);
+    alert(`Acabas de comprar: ${JSON.stringify(object)}`);
   }
 
   function handleChange(e){
@@ -21,9 +22,19 @@ export function ShoppingList(props) {
   }
 
   function deleteItem(indexToDelete){
-    setItems(items.filter((_, index) => index !== indexToDelete));
-    
+    setItems(items.filter((_, index) => index !== indexToDelete))
   }
+
+    
+  
+    function handleButton(e){
+    let newItem = {
+      "item": newItemName
+    }
+    setItems(items.concat([newItem]))
+    setNewItemName("")
+  }
+  
 
   return (
     <div className='shopping-list'>
@@ -39,7 +50,7 @@ export function ShoppingList(props) {
             )}
             <button>Checkout</button>
         </form>
-        
+        <input value={newItemName} onChange={handleChange}/><button onClick={handleButton}>Agregar</button>
     </div>
   );
 }
