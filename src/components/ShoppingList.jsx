@@ -1,56 +1,56 @@
 import React, { useState } from 'react';
 import ListItem from './ListItem';
-
-
+import AddItem from './AddItem';
+import Notification from './Notification';
 
 export function ShoppingList(props) {
-  const startItems = [];
-
-  const [items, setItems] = useState(startItems)
-  const [newItemName, setNewItemName] = useState("")
+  const [items, setItems] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [purchasedData, setPurchasedData] = useState({});
 
   function onFormSubmit(e) {
     e.preventDefault(); 
     const formData = new FormData(e.target);
     var object = {};
-    formData.forEach((value, key) => object[key] = value);
-    alert(`Acabas de comprar: ${JSON.stringify(object)}`);
-  }
-
-  function handleChange(e){
-    setNewItemName(e.target.value)
-  }
-
-  function deleteItem(indexToDelete){
-    setItems(items.filter((_, index) => index !== indexToDelete))
-  }
-
+    formData.forEach((value, key) => {
+        object[key] = value;
+    });
     
-  
-    function handleButton(e){
-    let newItem = {
-      "item": newItemName
-    }
-    setItems(items.concat([newItem]))
-    setNewItemName("")
+    setPurchasedData(object);
+    setIsModalOpen(true);
   }
-  
+
+  function handleCloseModal() {
+    setIsModalOpen(false); //Parametro de la notificacion
+    setItems([]); // Vacio de lista
+  }
+
+  function deleteItem(indexToDelete) {
+    setItems(items.filter((_, index) => index !== indexToDelete));
+  }
 
   return (
     <div className='shopping-list'>
-        <h1>Shopping List</h1>
-        <form onSubmit={onFormSubmit}>
-            {items.map((item, index) => 
-                <ListItem
-                key={item.item}
-                label={item.item}
-                maxValue={item.max}
-                onDelete={() => deleteItem(index)}
-              />
-            )}
-            <button>Checkout</button>
-        </form>
-        <input value={newItemName} onChange={handleChange}/><button onClick={handleButton}>Agregar</button>
+      <h1>Shopping List</h1>
+      <form onSubmit={onFormSubmit}>
+        {items.map((item, index) => 
+          <ListItem
+            key={index}
+            label={item.item}
+            onDelete={() => deleteItem(index)}
+          />
+        )}
+        
+        {items.length > 0 && <button type="submit">Comprar</button>}
+      </form>
+
+      <AddItem items={items} setItems={setItems} />
+
+      <Notification 
+        isOpen={isModalOpen} 
+        data={purchasedData} 
+        onClose={handleCloseModal} 
+      />
     </div>
   );
 }
