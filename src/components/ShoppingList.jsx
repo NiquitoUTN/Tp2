@@ -21,12 +21,22 @@ export function ShoppingList(props) {
   }
 
   function handleCloseModal() {
-    setIsModalOpen(false); //Parametro de la notificacion
-    setItems([]); // Vacio de lista
+    setIsModalOpen(false); 
+    setItems([]); 
   }
 
   function deleteItem(indexToDelete) {
     setItems(items.filter((_, index) => index !== indexToDelete));
+  }
+
+  // NUEVA FUNCIÓN: Recibe el índice del elemento a editar y el nuevo nombre
+  function editItem(indexToEdit, newName) {
+    // Hacemos una copia del arreglo original para no mutarlo directamente
+    const updatedItems = [...items];
+    // Actualizamos solo el nombre del ítem específico
+    updatedItems[indexToEdit].item = newName;
+    // Guardamos el nuevo estado
+    setItems(updatedItems);
   }
 
   return (
@@ -38,10 +48,11 @@ export function ShoppingList(props) {
             key={index}
             label={item.item}
             onDelete={() => deleteItem(index)}
+            // Le pasamos la nueva función al hijo
+            onEdit={(newName) => editItem(index, newName)}
           />
         )}
-        
-        {items.length > 0 && <button type="submit">Comprar</button>}
+        {items.length > 0 && <button className='shopping-button' type="submit">Reiniciar</button>}
       </form>
 
       <AddItem items={items} setItems={setItems} />

@@ -23,8 +23,8 @@ export default function AddItem({ items, setItems }) {
 
   return (
     <div>
-      <input value={newItemName} onChange={handleChange} />
-      <button type="button" onClick={handleButton}>Agregar</button>
+      <input className="add-label" value={newItemName} onChange={handleChange} />
+      <button className='shopping-button' type="button" onClick={handleButton}>Agregar</button>
     </div>
   );
 }
