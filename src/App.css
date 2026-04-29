@@ -50,7 +50,6 @@ h1 {
   text-align: right;
 }
 
-/* Fondo oscuro semitransparente */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -64,7 +63,7 @@ h1 {
   
 }
 
-/* El cuadrado blanco en el centro */
+
 .modal-content {
   background: #399c9c;
   padding: 20px;
@@ -89,7 +88,7 @@ h1 {
   cursor: pointer;
 }
 
-/* Contenedor principal de cada ítem  */
+
 .list-item {
   display: flex;
   align-items: center; 
@@ -99,24 +98,22 @@ h1 {
   margin-bottom: 8px;
   background-color: #8adbdb; 
   border-radius: 5px;
-  width: 100%;             /* Ocupa el ancho disponible... */
-  max-width: 500px;        /* ...pero frena en 500px para no verse gigante en PC */
-  margin-left: auto;       /* Centra la caja celeste horizontalmente */
+  width: 100%;             
+  max-width: 500px;        
+  margin-left: auto;       
   margin-right: auto;
 }
 
 .list-item label {
-  /* Le decimos que crezca todo lo que pueda dentro de ese max-width */
   flex: 1 1 auto; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
-  text-align: left; /* Asegura que el texto arranque desde la izquierda */
-  margin-right: auto; /* Empuja los botones hacia la derecha */
+  text-align: left; 
+  margin-right: auto; 
 }
 
-/* El input de texto (especialmente en modo edición) */
 .list-item input:not([type]) { 
   flex-grow: 1; 
   padding: 6px;
@@ -124,14 +121,14 @@ h1 {
   border-radius: 4px;
 }
 
-/* El input de cantidad (el que tiene los botones + y -) */
+
 .list-item input[readOnly] {
   flex-grow: 0;
   width: 30px; 
   text-align: center;
 }
 
-/* Botones dentro del list-item */
+
 .list-item button {
   padding: 6px 12px;
   white-space: nowrap; 
@@ -145,17 +142,15 @@ h1 {
   background-color: #8adbdb;
 }
 
-/*AddItem*/
 
-/* Contenedor principal de la sección agregar */
 .add-item-form {
   display: flex;
-  gap: 10px; /* Separación entre el input y el botón */
+  gap: 10px; 
   margin-top: 20px;
-  justify-content: center; /* Centra el formulario */
+  justify-content: center; 
 }
 
-/* Estilos específicos para el input de este contenedor */
+
 .add-item-form input {
   padding: 8px 12px;
   border: 1px solid #ccc;
@@ -197,4 +192,25 @@ h1 {
   border: none;
   border-radius: 5px;
   color: #000000;
+}
+
+
+.list-item.comprado {
+  background-color: #d4edda; 
+  opacity: 0.8; 
+  border: 1px solid #c3e6cb;
+}
+
+/*tachado*/
+.list-item.comprado label {
+  text-decoration: line-through;
+  color: #6c757d; 
+}
+
+
+.button-comprado {
+  background: none !important;
+  border: none !important;
+  font-size: 1.2rem;
+  padding: 0 5px !important;
 }

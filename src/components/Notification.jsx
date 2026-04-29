@@ -11,8 +11,8 @@ export default function Notification({ isOpen, data, onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>¡Compra realizada!</h2>
-        <p>Acabas de comprar:</p>
+        <h2>¡Se Reinicio la Lista!</h2>
+        <p>Los productos que estaban en la lista son:</p>
         
         <ul>
           {dataArray.map(([nombreProducto, cantidad]) => (

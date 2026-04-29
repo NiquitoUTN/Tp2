@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import "../App.css";
 import DeleteItem from "./DeleteItem"; 
+import MarkAsBought from "./Mark";
 
 export default function ListItem({ label, onDelete, onEdit }) {
   const [count, setCount] = useState(1);
-  
-  // Nuevos estados para la edición
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(label);
+
+  const [isBought, setIsBought] = useState(false);
 
   function plusOne(e) {
     e.preventDefault(); 
@@ -20,42 +21,46 @@ export default function ListItem({ label, onDelete, onEdit }) {
   }
 
   function handleSaveEdit(e) {
-    e.preventDefault(); // Evitamos que haga submit el formulario
-    if (editedName.trim() === "") return; // Evita guardar nombres vacíos
+    e.preventDefault(); 
+    if (editedName.trim() === "") return; 
     
-    onEdit(editedName); // Le mandamos el nuevo nombre al padre
-    setIsEditing(false); // Salimos del modo edición
+    onEdit(editedName); //mandar padre
+    setIsEditing(false); 
   }
 
-  // SI ESTAMOS EN MODO EDICIÓN, MOSTRAMOS ESTA VISTA:
+  
   if (isEditing) {
     return (
       <div className="list-item">
         <input 
           value={editedName} 
           onChange={(e) => setEditedName(e.target.value)} 
-          autoFocus // Hace que el cursor se ponga automáticamente acá
+          autoFocus 
         />
-        <button type="button" onClick={handleSaveEdit}>📁</button>
-        <button type="button" onClick={() => setIsEditing(false)}>❌</button>
+        <button type="button" onClick={handleSaveEdit}>Guardar</button>
+        <button type="button" onClick={() => setIsEditing(false)}>Cancelar</button>
       </div>
     );
   }
 
-  // VISTA NORMAL (La que ya tenías, pero con el botón Editar):
+  
   return (
-    <div className="list-item">
+    
+    <div className={`list-item ${isBought ? 'comprado' : ''}`}>
+      
+     
+      <MarkAsBought 
+        isBought={isBought} 
+        onToggle={() => setIsBought(!isBought)} 
+      />
+
       <label>{label}</label>
-      <button disabled={count === 1} onClick={minusOne}>➖</button>
       
-      {/* Como el 'name' es el label, si cambias el nombre, se actualiza perfecto en el Checkout */}
+      <button disabled={count === 1 || isBought} onClick={minusOne}>-</button>
       <input name={label} value={count} readOnly /> 
+      <button disabled={isBought} onClick={plusOne}>+</button>
       
-      <button onClick={plusOne}>➕</button>
-      
-      {/* Botón para activar el modo edición */}
-      <button type="button" onClick={() => setIsEditing(true)}>✏️</button>
-      
+      <button type="button" disabled={isBought} onClick={() => setIsEditing(true)}>Editar</button>
       <DeleteItem onDelete={onDelete} />
     </div>
   );
