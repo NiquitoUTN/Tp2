@@ -3,9 +3,6 @@ import '../App.css';
 
 export default function Notification({ isOpen, data, onClose }) {
   if (!isOpen) return null;
-
-  // Object.entries convierte tu objeto en un arreglo de pares [llave, valor]
-  // Para poder recorrerlo con .map()
   const dataArray = Object.entries(data);
 
   return (
